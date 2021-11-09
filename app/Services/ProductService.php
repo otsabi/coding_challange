@@ -8,17 +8,25 @@ use  App\Repositories\ProductRepository;
 
 class ProductService
 {
-    protected $ProductRepository;
-    public function __construct(ProductRepository $ProductRepository)
+    protected $productRepository;
+    public function __construct(ProductRepository $productRepository)
     {
-        $this->ProductRepository = $ProductRepository;
+        $this->productRepository = $productRepository;
     }
+
     public function getProduct()
     {
-        return $product_list = $this->ProductRepository->get();
+        return $product_list = $this->productRepository->get();
     }
-    public function addProduct($inputs)
+
+    public function createProduct($inputs)
     {
-        return $this->ProductRepository->add($inputs);
+        return $this->productRepository->create($inputs);
     }
+
+    public function deleteProduct($id)
+    {
+        return $this->productRepository->delete($id);
+    }
+
 }

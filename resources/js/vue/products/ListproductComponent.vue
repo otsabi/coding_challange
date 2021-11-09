@@ -4,7 +4,7 @@
             <b-row class="m-2">
                 <b-col>
                         <b-form-select
-                            v-model="selected_category"
+                            v-model="selectedCategory"
                             :options="categorys"
                             value-field="id"
                             text-field="name"
@@ -15,21 +15,21 @@
                     <b-button
                         variant="primary"
                     >
-                        <span class="text-nowrap" @click="SetShow">Add Product</span>
+                        <span class="text-nowrap" @click="setShow">Add Product</span>
                     </b-button>
                 </b-col>
                 <b-col>
                     <b-button
                         variant="danger"
                     >
-                        <span class="text-nowrap" @click="Reset">Reset Filter</span>
+                        <span class="text-nowrap" @click="reset">reset Filter</span>
                     </b-button>
                 </b-col>
             </b-row>
             <b-row>
                 <b-col>
                     <b-table striped hover
-                             :items="filterproducts"
+                             :items="filterProducts"
                              :fields="fields">
                     </b-table>
 
@@ -51,7 +51,7 @@ export default {
     },
 	data () {
 		return {
-            selected_category: null,
+            selectedCategory: null,
             fields: [
             { key: 'id', sortable: true },
             { key: 'name', sortable: true },
@@ -66,10 +66,10 @@ export default {
         console.log(this.products)
     },
     computed: {
-        filterproducts() {
-            if(this.selected_category){
+        filterProducts() {
+            if(this.selectedCategory){
 
-                const Products = this.products.filter( product => product.category_id === (this.selected_category || product.category_id ))
+                const Products = this.products.filter( product => product.category_id === (this.selectedCategory || product.category_id ))
 
                 return Products
             }
@@ -81,17 +81,16 @@ export default {
         }
     },
     methods: {
-    SetShow()
-    {
-        console.log('hello')
-        this.$emit('SetShow', 'add')
-    },
-    Reset(){
-        this.selected_category = null
-    }
+        setShow()
+        {
+            this.$emit('setShow', 'add')
+        },
+        reset(){
+            this.selectedCategory = null
+        }
     },
     // watch: {
-    //     "selected_category": function (val, oldValue) {
+    //     "selectedCategory": function (val, oldValue) {
 
     //         this.products = this.products.filter( product => product.category_id === val)
 

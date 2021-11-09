@@ -2,13 +2,13 @@
 
 	<div>
         <listproduct-component
-        @SetShow="SetShow"
+        @setShow="setShow"
         :products.sync="products"
         :categorys.sync="categorys"
         v-if="show == 'listing'"
         />
         <addproduct-component
-        @SetShow="SetShow"
+        @setShow="setShow"
         :categorys.sync="categorys"
         v-if="show == 'add'"
         />
@@ -27,7 +27,7 @@ export default {
 	data () {
 		return {
             products: null,
-            categorys:null,
+            categorys: null,
 			show: "listing",
 		}
 	},
@@ -37,7 +37,6 @@ export default {
         .then((r) => {
           this.products  = r.data.products
           this.categorys = r.data.categorys
-          
 
         })
         .catch((e) => {
@@ -45,7 +44,7 @@ export default {
         });
     },
     methods: {
-        SetShow(value)
+        setShow(value)
         {
             this.show = value
         }

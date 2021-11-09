@@ -7,15 +7,15 @@ use  App\Services\ProductService;
 
 class ProductController extends Controller
 {
-    protected $ProductService;
-    public function __construct(ProductService $ProductService)
+    protected $productService;
+    public function __construct(ProductService $productService)
     {
-        $this->ProductService = $ProductService;
+        $this->productService = $productService;
     }
 
     public function index()
     {
-        $data = $this->ProductService->getProduct();
+        $data = $this->productService->getProduct();
 
         return response()->json($data);
     }
@@ -39,7 +39,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
 
-        $this->ProductService->addProduct($request->all());
+        $this->productService->createProduct($request->all());
 
         return response()->json(['message' => 'Opération Done']);
 

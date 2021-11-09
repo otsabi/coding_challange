@@ -2,16 +2,22 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Category;
+use App\Services\CategoryService;
 use Illuminate\Console\Command;
 
 class CreateCategoryCommand extends Command
 {
+    public function __construct(CategoryService $categoryService)
+    {
+        $this->categoryService = $categoryService;
+        parent::__construct();
+    }
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
+
     protected $signature = 'category:create {name} {parent_category?}';
 
     /**
@@ -26,10 +32,6 @@ class CreateCategoryCommand extends Command
      *
      * @return void
      */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * Execute the console command.
@@ -41,21 +43,9 @@ class CreateCategoryCommand extends Command
         $name            = $this->argument('name');
         $parent_category = $this->argument('parent_category');
 
-        $fk_category     = Category::find($parent_category);
+        $response =  $this->categoryService->createCategory($name,$parent_category);
 
-        if($fk_category)
-        {
-            Category::create([
-            'name'            => $name,
-            'parent_category' => $parent_category,
-            ]);
-
-            return $this->info('category created');
-        }
-        else
-        {
-            return $this->info('parent category not found');
-        }
+        return $this->info($response);
 
     }
 }

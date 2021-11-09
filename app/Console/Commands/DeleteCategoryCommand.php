@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Category;
+use App\Services\CategoryService;
 use Illuminate\Console\Command;
 
 class DeleteCategoryCommand extends Command
@@ -26,8 +26,9 @@ class DeleteCategoryCommand extends Command
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(CategoryService $categoryService)
     {
+        $this->categoryService = $categoryService;
         parent::__construct();
     }
 
@@ -40,17 +41,9 @@ class DeleteCategoryCommand extends Command
     {
         $id  = $this->argument('id');
 
-        $category = Category::where('id',$id)->first();
+        $response =  $this->categoryService->deleteCategory($id);
 
-        if($category){
-
-            $category->delete();
-
-            return $this->info('category deleted');
-        }
-        else{
-            return $this->info('category not found');
-        }
+        return $this->info($response);
 
     }
 }

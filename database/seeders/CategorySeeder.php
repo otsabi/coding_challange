@@ -15,7 +15,7 @@ class CategorySeeder extends Seeder
     {
         $data_category = [
             ['id' => 1, 'name' => 'Argan'],
-            ['id' => 2, 'name' => 'Argan Oil']        ];
+            ['id' => 2, 'name' => 'Argan Oil', ]        ];
         \DB::table('category')->insert($data_category);
     }
 }

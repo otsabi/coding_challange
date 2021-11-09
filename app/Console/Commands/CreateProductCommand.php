@@ -3,15 +3,18 @@
 namespace App\Console\Commands;
 
 use App\Models\Product;
+use App\Services\ProductService;
 use Illuminate\Console\Command;
 
 class CreateProductCommand extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
+    protected $productService;
+    public function __construct(ProductService $productService)
+
+    {
+        $this->productService = $productService;
+        parent::__construct();
+    }
     protected $signature = 'product:create {name} {description} {price} {category_id} {image?}';
 
     /**
@@ -26,10 +29,7 @@ class CreateProductCommand extends Command
      *
      * @return void
      */
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
 
     /**
      * Execute the console command.
@@ -38,20 +38,16 @@ class CreateProductCommand extends Command
      */
     public function handle()
     {
-        $name        = $this->argument('name');
-        $description = $this->argument('description');
-        $price       = $this->argument('price');
-        $category_id = $this->argument('category_id');
-        $image       = $this->argument('image') ?? '';
+        $inputs = array();
+        $inputs['name']        = $this->argument('name');
+        $inputs['description'] = $this->argument('description');
+        $inputs['price']       = $this->argument('price');
+        $inputs['category_id'] = $this->argument('category_id');
+        $inputs['image']       = $this->argument('image') ?? '';
 
-        Product::create([
-            'name'        => $name,
-            'description' => $description,
-            'price'       => $price,
-            'category_id' => $category_id,
-            'image'       => $image,
-        ]);
 
-        return $this->info('product created');
+        $response =  $this->productService->createProduct($inputs);
+
+        return $this->info($response);
     }
 }

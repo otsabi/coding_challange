@@ -24,7 +24,6 @@
                 <b-col>
                     <b-form-file v-model="file" class="mt-3" accept=".jpg, .png, .gif" plain></b-form-file>
                 </b-col>
-
                 <b-col>
                     <b-button
                         variant="primary"
@@ -32,7 +31,6 @@
                         <span class="text-nowrap" @click="submit">Add Product</span>
                     </b-button>
                 </b-col>
-
             </b-row>
         </b-container>
 	</div>
@@ -67,7 +65,7 @@ export default {
                 .then(console.log('add product'))
                 .catch(error => console.log(error))
 
-                this.$emit('SetShow', 'listing')
+                this.$emit('setShow', 'listing')
         }
     }
 
